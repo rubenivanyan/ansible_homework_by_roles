@@ -2,4 +2,4 @@
 uname: 'user'
 upass: 'password'
 db_name: 'wordpress_db'
-
+remote_user: 'server'
