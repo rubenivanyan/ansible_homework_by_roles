@@ -6,8 +6,8 @@
         remote_src: true
       become: true
     - name: 'Copy wp-config for datebase'
-      ansible.builtin.copy:
-        src: '/home/{{ user.stdout }}/ansible_homework_by_roles/wp-config.php'  
+      template:
+        src: 'wp-config.php.j2'
         dest: '/var/www/wordpress/wp-config.php'
         mode: '0664'
       become: true
@@ -16,8 +16,8 @@
         path: '/var/www/wordpress'
         state: 'directory'
         recurse: true
-        owner: 'www-data'
-        group: 'www-data'
+        owner: '{{nginx_user}}'
+        group: '{{nginx_group}}'
       become: true
    
 ...

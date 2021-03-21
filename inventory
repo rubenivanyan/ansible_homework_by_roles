@@ -1,2 +1,3 @@
 [webservers]
-10.10.10.6  ansible_connection=ssh ansible_user=server ansible_ssh_private_key=jukw4abk6P/7lf1xFZoPszLAGBqvFPczDCL6l77ymEc
+web-server ansible_host=10.10.10.6  ansible_connection=ssh ansible_user=server ansible_sudo_pass=SecretKey ansible_ssh_pass=SecretKey
+
