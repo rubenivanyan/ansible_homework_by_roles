@@ -1,18 +1,13 @@
 ---
 # tasks file for mysql
-    - name: 'install mysql package'
+    - name: 'install mysql & python3 for mysql packages'
       apt:
         force_apt_get: true
         update_cache: true
-        name: 'mysql-server'
+        name: '{{item}}'
         state: 'present'
       become: true
-    - name: 'install python3 for mysql'
-      apt:
-        update_cache: true
-        name: 'python3-pymysql'
-        state: 'present'
-      become: true
+      loop: '{{program_list}}'
     - name: 'Create a new database with name wordpress_db'
       community.mysql.mysql_db:
         login_unix_socket: '{{mysql_unixsocket_path}}'

@@ -10,10 +10,10 @@
     - name: 'Get the hosts username'
       become: 'false'
       local_action: 'command whoami'
-      register: 'whoami'
+      register: 'user'
     - name: 'copy  nginx config'
       ansible.builtin.copy:
-        src: '/home/{{ whoami.stdout }}/ansible_homework/nginx.conf'
+        src: '/home/{{ user.stdout }}/ansible_homework_by_roles/nginx.conf'
         dest: '/etc/nginx/sites-available/wordpress'
         owner: 'www-data'
         group: 'www-data'
