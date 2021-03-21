@@ -1,0 +1,37 @@
+---
+    - name: 'install wordpress'
+      apt:
+        update_cache: true
+        force_apt_get: true
+        name: 'wordpress'
+        state: 'present'
+      become: true  
+    - name: 'Download & unarchive wordpress'
+      unarchive:
+        src: 'https://wordpress.org/latest.tar.gz'
+        dest: '/var/www/'
+        remote_src: true
+      become: true
+    - name: 'Copy wp-config for datebase'
+      ansible.builtin.copy:
+        src: '/home/{{ whoami.stdout }}/ansible_homework_by_roles/wp-config.php'  
+        dest: '/var/www/wordpress/wp-config.php'
+        mode: '0664'
+      become: true
+    - name: 'copy  nginx config'
+      ansible.builtin.copy:
+        src: '/home/{{ whoami.stdout }}/ansible_homework_by_roles/nginx.conf'
+        dest: '/etc/nginx/sites-available/wordpress'
+        owner: 'www-data'
+        group: 'www-data'
+      become: true
+    - name: 'Set ownership'
+      file:
+        path: '/var/www/wordpress'
+        state: 'directory'
+        recurse: true
+        owner: 'www-data'
+        group: 'www-data'
+      become: true
+   
+...

@@ -1,0 +1,36 @@
+---
+# tasks file for nginx
+    - name: 'install nginx'    
+      apt:
+        update_cache: true
+        force_apt_get: true
+        name: 'nginx'
+        state: 'present'
+      become: true  
+    - name: 'Get the hosts username'
+      become: 'false'
+      local_action: 'command whoami'
+      register: 'whoami'
+    - name: 'copy  nginx config'
+      ansible.builtin.copy:
+        src: '/home/{{ whoami.stdout }}/ansible_homework/nginx.conf'
+        dest: '/etc/nginx/sites-available/wordpress'
+        owner: 'www-data'
+        group: 'www-data'
+      become: true
+    - name: 'Create symbolic link'
+      ansible.builtin.file:
+        src: '/etc/nginx/sites-available/wordpress'
+        dest: '/etc/nginx/sites-enabled/wordpress'
+        state: 'link'
+      become: true
+    - name: 'Delete default files'
+      ansible.builtin.file:
+        path: '/etc/nginx/sites-enabled/default'
+        state: 'absent'
+      become: true
+    - name: 'Restart nginx'
+      service: 'name=nginx state=restarted'
+      become: true
+   
+

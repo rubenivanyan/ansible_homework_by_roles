@@ -1,0 +1,16 @@
+---
+- hosts: 'webservers'
+  remote_user: 'server'
+  gather_facts: false
+  tasks: 
+    - name: 'Get the hosts username'
+      become: 'false'
+      local_action: 'command whoami'
+      register: 'whoami'
+  roles:
+    - role: 'mysql'
+    - role: 'php'
+    - role: 'nginx'
+    - role: 'wordpress'
+
+  

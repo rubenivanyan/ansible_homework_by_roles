@@ -1,0 +1,8 @@
+---
+# defaults file for mysql
+
+upass: mypass
+uname: wordpress_user
+db_name: wordpress_db
+mysql_unixsocket_path: /var/run/mysqld/mysqld.sock 
+
