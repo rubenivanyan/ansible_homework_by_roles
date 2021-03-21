@@ -9,6 +9,8 @@
       template:
         src: 'wp-config.php.j2'
         dest: '/var/www/wordpress/wp-config.php'
+        owner: '{{wordpress_user}}'
+        group: '{{wordpress_group}}'
         mode: '0664'
       become: true
     - name: 'Set ownership'
@@ -16,8 +18,8 @@
         path: '/var/www/wordpress'
         state: 'directory'
         recurse: true
-        owner: '{{nginx_user}}'
-        group: '{{nginx_group}}'
+        owner: '{{wordpress_user}}'
+        group: '{{wordpress_group}}'
       become: true
-   
+      notify: '{{wordpress_nginx_handler_name}}'
 ...
